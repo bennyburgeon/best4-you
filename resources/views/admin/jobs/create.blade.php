@@ -102,6 +102,15 @@
                     <input type="text" class="form-control" id="location" name="location" value="{{ old('location') }}" />
                 </div>
                 <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="region_id">Job Region</label>
+                    <select class="form-select select2" id="region_id" name="region_id" data-placeholder="Choose Region">
+                        <option value=""></option>
+                        @foreach($regions as $region)
+                            <option value="{{ $region->id }}" {{ old('region_id') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
                     <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="opening_date">Opening Date</label>
                     <input type="date" class="form-control" id="opening_date" name="opening_date" value="{{ old('opening_date') }}" />
                 </div>

@@ -13,15 +13,6 @@ class RegionController extends Controller
 
     public function index(Request $request)
     {
-        if (Region::count() === 0) {
-            Region::insert([
-                ['name' => 'India', 'slug' => 'india', 'status' => true, 'created_at' => now(), 'updated_at' => now()],
-                ['name' => 'Gulf', 'slug' => 'gulf', 'status' => true, 'created_at' => now(), 'updated_at' => now()],
-                ['name' => 'Europe', 'slug' => 'europe', 'status' => true, 'created_at' => now(), 'updated_at' => now()],
-                ['name' => 'Others', 'slug' => 'others', 'status' => true, 'created_at' => now(), 'updated_at' => now()],
-            ]);
-        }
-
         if ($request->ajax() || $request->wantsJson()) {
             if ($request->has('all')) {
                 return response()->json(Region::all());

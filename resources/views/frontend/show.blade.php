@@ -363,7 +363,7 @@
                         @endif
                         <span class="category-pill">{{ $job->category ? $job->category->name : 'General' }}</span>
                         @if($job->region)
-                            <span class="category-pill" style="background: rgba(26, 118, 209, 0.25); color: #fff;"><i class="fa fa-globe me-1"></i>{{ $job->region->name }}</span>
+                            <span class="category-pill region-badge"><i class="fa fa-globe me-1"></i>{{ $job->region->name }}</span>
                         @endif
                         @if($job->jobType)
                             <span class="type-pill"><i class="fa fa-star me-1"></i>{{ $job->jobType->name }}</span>

@@ -1,0 +1,70 @@
+/* Job Regions - Public Stylesheet */
+
+/* Dropdown chevron arrows styling for native selects */
+.panel-input select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 16px;
+  padding-right: 24px;
+  cursor: pointer;
+}
+
+/* NiceSelect styling overrides inside panel-input search panel */
+.panel-input .nice-select {
+  background: transparent !important;
+  border: 0 !important;
+  height: auto !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  float: none !important;
+}
+.panel-input .nice-select .current {
+  color: #2C2D3F !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+.panel-input .nice-select:after {
+  right: 4px !important;
+}
+.panel-input .nice-select .list {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+
+/* Explore by Region Homepage Section */
+.regions-section {
+  background-color: #f9fafb;
+  padding: 80px 0;
+}
+.regions-section .regions-card {
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.regions-section .regions-card:hover {
+  transform: translateY(-8px);
+}
+.regions-section .regions-icon {
+  font-size: 3rem;
+}
+.regions-section .regions-btn {
+  border-radius: 20px;
+}
+
+/* Job Details Page region badge */
+.region-badge {
+  background: rgba(26, 118, 209, 0.25) !important;
+  color: #fff !important;
+}
+
+/* Job List Item region badge */
+.region-badge-outline {
+  background: rgba(26, 118, 209, 0.1) !important;
+  color: #1a76d1 !important;
+}

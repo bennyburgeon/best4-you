@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('public/frontend/assets/css/normalize.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontend/assets/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontend/assets/css/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontend/assets/css/regions.css') }}" />
 
     <style>
         .navigation .nav.menu li a.active {

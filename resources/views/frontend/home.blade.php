@@ -262,7 +262,7 @@
     <!--/End Start schedule Area -->
 
     <!-- Start Regions Section -->
-    <section class="regions-section section" style="background-color: #f9fafb; padding: 80px 0;">
+    <section class="regions-section section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -284,11 +284,11 @@
                             elseif ($reg->slug === 'europe') { $color = '#10b981'; $icon = 'icofont-location-pin'; }
                         @endphp
                         <div class="col-lg-3 col-md-6 col-12 mb-4">
-                            <div class="card border-0 shadow-sm text-center h-100 p-4" style="border-radius: 12px; transition: transform 0.3s ease;">
-                                <div class="icon mb-3" style="font-size: 3rem; color: {{ $color }};"><i class="{{ $icon }}"></i></div>
+                            <div class="card border-0 shadow-sm text-center h-100 p-4 regions-card">
+                                <div class="icon mb-3 regions-icon" style="color: {{ $color }};"><i class="{{ $icon }}"></i></div>
                                 <h4 class="fw-bold mb-2">Jobs in {{ $reg->name }}</h4>
                                 <p class="text-muted mb-3">Explore opportunities and build your career in {{ $reg->name }}.</p>
-                                <a href="{{ url('/jobs?region=' . $reg->slug) }}" class="btn btn-outline-primary btn-sm mt-auto" style="border-radius: 20px;">Browse Jobs</a>
+                                <a href="{{ url('/jobs?region=' . $reg->slug) }}" class="btn btn-outline-primary btn-sm mt-auto regions-btn">Browse Jobs</a>
                             </div>
                         </div>
                     @endforeach

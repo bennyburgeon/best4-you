@@ -8,6 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasColumn('jobs', 'region_id')) {
+            Schema::table('jobs', function (Blueprint $table) {
+                try {
+                    $table->dropForeign(['region_id']);
+                } catch (\Exception $e) {
+                    // Ignore
+                }
+                $table->dropColumn('region_id');
+            });
+        }
+
         Schema::table('jobs', function (Blueprint $table) {
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
         });

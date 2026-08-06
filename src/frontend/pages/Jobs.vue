@@ -240,8 +240,8 @@ const fetchCategories = async () => {
 const regionsList = ref([]);
 const fetchRegions = async () => {
   try {
-    const res = await axios.get('/regions');
-    regionsList.value = Array.isArray(res.data) ? res.data : (res.data.data || []);
+    const res = await axios.get('/regions?all=1');
+    regionsList.value = res.data;
   } catch (e) {
     console.error(e);
   }

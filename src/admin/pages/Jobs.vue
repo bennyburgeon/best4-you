@@ -45,8 +45,8 @@ const regionsList = ref([]);
 
 const fetchRegions = async () => {
     try {
-        const response = await axios.get('/regions');
-        regionsList.value = Array.isArray(response.data) ? response.data : (response.data.data || []);
+        const response = await axios.get('/regions?all=1');
+        regionsList.value = response.data;
     } catch (e) { console.error(e); }
 }
 

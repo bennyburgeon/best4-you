@@ -126,7 +126,17 @@
 }
 
 .search-field input,
-.panel-input input,
+.panel-input input {
+  background: transparent;
+  border: 0;
+  color: #2C2D3F;
+  font-size: 14px;
+  font-weight: 400;
+  min-width: 0;
+  outline: 0;
+  width: 100%;
+}
+
 .panel-input select {
   background: transparent;
   border: 0;
@@ -136,6 +146,40 @@
   min-width: 0;
   outline: 0;
   width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 16px;
+  padding-right: 24px;
+  cursor: pointer;
+}
+
+/* Override NiceSelect styles inside panel-input */
+.panel-input .nice-select {
+  background: transparent !important;
+  border: 0 !important;
+  height: auto !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  float: none !important;
+}
+.panel-input .nice-select .current {
+  color: #2C2D3F !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+.panel-input .nice-select:after {
+  right: 4px !important;
+}
+.panel-input .nice-select .list {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 99;
 }
 
 .search-button,

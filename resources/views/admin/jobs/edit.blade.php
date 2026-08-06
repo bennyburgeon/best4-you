@@ -1,0 +1,238 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit Job')
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+<!-- Quill Theme CSS -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<style>
+    .select2-container--bootstrap-5 .select2-selection { border-color: #d9dee3; color: #697a8d; padding: 0.35rem 0.75rem; }
+    .ql-toolbar {
+        border-top-left-radius: 0.375rem;
+        border-top-right-radius: 0.375rem;
+        border-color: #d9dee3 !important;
+    }
+    .ql-container {
+        border-bottom-left-radius: 0.375rem;
+        border-bottom-right-radius: 0.375rem;
+        border-color: #d9dee3 !important;
+        font-family: 'Public Sans', sans-serif !important;
+        font-size: 0.9375rem !important;
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header border-bottom">
+        <h5 class="mb-0 fw-bold">Edit Job Vacancy</h5>
+    </div>
+    <div class="card-body pt-4">
+        <form action="{{ route('jobs.update', $item->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            
+            <div class="row">
+                <!-- Row 1 -->
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">Job Code</label>
+                    <input type="text" class="form-control bg-light" name="job_code" readonly value="{{ old('job_code', $item->job_code) }}" />
+                </div>
+                <div class="col-12 col-md-8 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="title">Position Title *</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $item->title) }}" required />
+                </div>
+
+                <!-- Row 2 -->
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="industry_type_id">Industry Type</label>
+                    <select class="form-select select2" id="industry_type_id" name="industry_type_id" data-placeholder="Choose Industry">
+                        <option value=""></option>
+                        @foreach($industryTypes as $ind)
+                            <option value="{{ $ind->id }}" {{ old('industry_type_id', $item->industry_type_id) == $ind->id ? 'selected' : '' }}>{{ $ind->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="job_category_id">Job Category *</label>
+                    <select class="form-select select2" id="job_category_id" name="job_category_id" required data-placeholder="Choose Category">
+                        <option value=""></option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ old('job_category_id', $item->job_category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="job_type_id">Job Type</label>
+                    <select class="form-select select2" id="job_type_id" name="job_type_id" data-placeholder="Choose Job Type">
+                        <option value=""></option>
+                        @foreach($jobTypes as $type)
+                            <option value="{{ $type->id }}" {{ old('job_type_id', $item->job_type_id) == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="gender_preference">Gender Preference</label>
+                    <select class="form-select select2" id="gender_preference" name="gender_preference" data-minimum-results-for-search="Infinity">
+                        <option value="No Preference" {{ old('gender_preference', $item->gender_preference) == 'No Preference' ? 'selected' : '' }}>No Preference</option>
+                        <option value="Male" {{ old('gender_preference', $item->gender_preference) == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ old('gender_preference', $item->gender_preference) == 'Female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="client_id">Linked Client</label>
+                    <select class="form-select select2" id="client_id" name="client_id" data-placeholder="Choose Client">
+                        <option value=""></option>
+                        @foreach($clientsList as $client)
+                            <option value="{{ $client->id }}" {{ old('client_id', $item->client_id) == $client->id ? 'selected' : '' }}>{{ $client->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="company">Fallback Company Name</label>
+                    <input type="text" class="form-control" id="company" name="company" value="{{ old('company', $item->company) }}" />
+                </div>
+
+                <!-- Row 4 -->
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="location">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ old('location', $item->location) }}" />
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="opening_date">Opening Date</label>
+                    <input type="date" class="form-control" id="opening_date" name="opening_date" value="{{ old('opening_date', $item->opening_date) }}" />
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="closing_date">Closing Date</label>
+                    <input type="date" class="form-control" id="closing_date" name="closing_date" value="{{ old('closing_date', $item->closing_date) }}" />
+                </div>
+
+                <!-- Row 5 -->
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="currency_id">Salary Currency</label>
+                    <select class="form-select select2" id="currency_id" name="currency_id" data-placeholder="Choose Currency">
+                        <option value=""></option>
+                        @foreach($currencies as $currency)
+                            <option value="{{ $currency->id }}" {{ old('currency_id', $item->currency_id) == $currency->id ? 'selected' : '' }}>{{ $currency->name }} ({{ $currency->symbol }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted w-100" style="font-size: 0.75rem; letter-spacing: 0.5px;">Experience Range (Yrs)</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="experience_min" placeholder="Min" value="{{ old('experience_min', $item->experience_min) }}">
+                        <span class="input-group-text">to</span>
+                        <input type="number" class="form-control" name="experience_max" placeholder="Max" value="{{ old('experience_max', $item->experience_max) }}">
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label class="form-label text-uppercase text-muted w-100" style="font-size: 0.75rem; letter-spacing: 0.5px;">Salary Range</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="salary_from" placeholder="Min" value="{{ old('salary_from', $item->salary_from) }}">
+                        <span class="input-group-text">to</span>
+                        <input type="number" class="form-control" name="salary_to" placeholder="Max" value="{{ old('salary_to', $item->salary_to) }}">
+                    </div>
+                </div>
+
+                <!-- Row 6 -->
+                <div class="col-12 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="skills">Key Skills</label>
+                    <select class="form-select select2-tags" id="skills" name="skills[]" multiple="multiple" data-placeholder="Type and press enter to add new skills">
+                        @foreach($skills as $skill)
+                            <option value="{{ $skill->id }}" {{ (is_array(old('skills')) ? in_array($skill->id, old('skills')) : $item->skills->contains('id', $skill->id)) ? 'selected' : '' }}>{{ $skill->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Row 7 -->
+                <div class="col-12 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="roles_and_responsibility">Roles and Responsibilities</label>
+                    <textarea class="form-control" id="roles_and_responsibility" name="roles_and_responsibility" rows="5">{{ old('roles_and_responsibility', $item->roles_and_responsibility) }}</textarea>
+                </div>
+
+                <!-- Row 8 -->
+                <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="hr_incharge">In-charge HR Name</label>
+                    <input type="text" class="form-control" id="hr_incharge" name="hr_incharge" value="{{ old('hr_incharge', $item->hr_incharge) }}" />
+                </div>
+                <div class="col-12 col-md-6 mb-4">
+                    <label class="form-label text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;" for="email">Contact Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $item->email) }}" />
+                </div>
+            </div>
+            
+            <div class="border-top pt-3 d-flex justify-content-end gap-2">
+                <a href="{{ route('jobs.index') }}" class="btn btn-label-secondary" style="background-color: #f5f5f9; color: #697a8d;">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Vacancy</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Quill JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        theme: 'bootstrap-5'
+    });
+    $('.select2-tags').select2({
+        theme: 'bootstrap-5',
+        tags: true,
+        tokenSeparators: [',']
+    });
+
+    // Quill Rich Text Editor integration
+    const textarea = $('#roles_and_responsibility');
+    if (textarea.length) {
+        // Hide the original textarea
+        textarea.hide();
+
+        // Create editor container
+        const editorContainer = $('<div id="quill-editor" style="height: 250px;"></div>');
+        textarea.after(editorContainer);
+
+        // Initialize Quill
+        const quill = new Quill('#quill-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'clean']
+                ]
+            }
+        });
+
+        // Load initial content (populated from model/textarea)
+        quill.root.innerHTML = textarea.val();
+
+        // Synchronize editor content to textarea on changes
+        quill.on('text-change', function() {
+            let html = quill.root.innerHTML;
+            if (quill.getText().trim().length === 0) {
+                html = '';
+            }
+            textarea.val(html);
+        });
+
+        // Ensure content is synced before form submission
+        textarea.closest('form').on('submit', function() {
+            let html = quill.root.innerHTML;
+            if (quill.getText().trim().length === 0) {
+                html = '';
+            }
+            textarea.val(html);
+        });
+    }
+});
+</script>
+@endpush

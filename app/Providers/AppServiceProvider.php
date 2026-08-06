@@ -20,5 +20,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         URL::forceScheme('https');
+
+        view()->composer('*', function ($view) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('regions')) {
+                $view->with('globalRegions', \App\Models\Region::where('status', true)->get());
+            }
+        });
     }
 }

@@ -7,21 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 <!-- Quill Theme CSS -->
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-<style>
-    .select2-container--bootstrap-5 .select2-selection { border-color: #d9dee3; color: #697a8d; padding: 0.35rem 0.75rem; }
-    .ql-toolbar {
-        border-top-left-radius: 0.375rem;
-        border-top-right-radius: 0.375rem;
-        border-color: #d9dee3 !important;
-    }
-    .ql-container {
-        border-bottom-left-radius: 0.375rem;
-        border-bottom-right-radius: 0.375rem;
-        border-color: #d9dee3 !important;
-        font-family: 'Public Sans', sans-serif !important;
-        font-size: 0.9375rem !important;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('public/admin/assets/css/jobs.css') }}" />
 @endpush
 
 @section('content')
@@ -187,61 +173,5 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Quill JS CDN -->
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-<script>
-$(document).ready(function() {
-    $('.select2').select2({
-        theme: 'bootstrap-5'
-    });
-    $('.select2-tags').select2({
-        theme: 'bootstrap-5',
-        tags: true,
-        tokenSeparators: [',']
-    });
-
-    // Quill Rich Text Editor integration
-    const textarea = $('#roles_and_responsibility');
-    if (textarea.length) {
-        // Hide the original textarea
-        textarea.hide();
-
-        // Create editor container
-        const editorContainer = $('<div id="quill-editor" style="height: 250px;"></div>');
-        textarea.after(editorContainer);
-
-        // Initialize Quill
-        const quill = new Quill('#quill-editor', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    [{ 'header': [1, 2, 3, false] }],
-                    ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['link', 'clean']
-                ]
-            }
-        });
-
-        // Load initial content (populated from model/textarea)
-        quill.root.innerHTML = textarea.val();
-
-        // Synchronize editor content to textarea on changes
-        quill.on('text-change', function() {
-            let html = quill.root.innerHTML;
-            if (quill.getText().trim().length === 0) {
-                html = '';
-            }
-            textarea.val(html);
-        });
-
-        // Ensure content is synced before form submission
-        textarea.closest('form').on('submit', function() {
-            let html = quill.root.innerHTML;
-            if (quill.getText().trim().length === 0) {
-                html = '';
-            }
-            textarea.val(html);
-        });
-    }
-});
-</script>
+<script src="{{ asset('public/admin/assets/js/jobs.js') }}"></script>
 @endpush

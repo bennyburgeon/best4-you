@@ -5,10 +5,7 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-<style>
-    .select2-container--bootstrap-5 .select2-selection { border-color: #d9dee3; color: #697a8d; padding: 0.35rem 0.75rem; }
-    .select2-search__field { font-size: 0.875rem; }
-</style>
+<link rel="stylesheet" href="{{ asset('public/admin/assets/css/users.css') }}" />
 @endpush
 
 @section('content')
@@ -100,7 +97,7 @@
                 <h5 class="modal-title fw-bold" id="modalTitle">New User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="userForm" action="" method="POST">
+            <form id="userForm" data-url="{{ url('admin/users') }}" action="" method="POST">
                 @csrf
                 <input type="hidden" name="_method" id="formMethod" value="POST">
                 <div class="modal-body pt-4">
@@ -140,41 +137,5 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.select2-multiple').select2({
-            theme: 'bootstrap-5',
-            dropdownParent: $('#userModal')
-        });
-    });
-
-    function openDialog(id = null, name = '', email = '', rolesList = []) {
-        var myModal = new bootstrap.Modal(document.getElementById('userModal'));
-        var form = document.getElementById('userForm');
-        
-        document.getElementById('name').value = name;
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = '';
-        
-        $('#roles').val(rolesList).trigger('change');
-        
-        if (id) {
-            document.getElementById('modalTitle').innerText = 'Edit User';
-            document.getElementById('formMethod').value = 'PUT';
-            form.action = '{{ url("admin/users") }}/' + id;
-            document.getElementById('password').required = false;
-            document.getElementById('passwordLabel').innerText = 'Password (Optional)';
-            document.getElementById('passwordHelp').classList.remove('d-none');
-        } else {
-            document.getElementById('modalTitle').innerText = 'New User';
-            document.getElementById('formMethod').value = 'POST';
-            form.action = '{{ url("admin/users") }}';
-            document.getElementById('password').required = true;
-            document.getElementById('passwordLabel').innerText = 'Password *';
-            document.getElementById('passwordHelp').classList.add('d-none');
-        }
-        
-        myModal.show();
-    }
-</script>
+<script src="{{ asset('public/admin/assets/js/users.js') }}"></script>
 @endpush

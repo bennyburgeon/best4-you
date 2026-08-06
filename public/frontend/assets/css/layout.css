@@ -1,0 +1,4 @@
+/* Guest Frontend Layout - Custom Overrides */
+.navigation .nav.menu li a.active {
+    color: #1a76d1;
+}

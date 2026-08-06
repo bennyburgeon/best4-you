@@ -5,10 +5,7 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-<style>
-    .select2-container--bootstrap-5 .select2-selection { border-color: #d9dee3; color: #697a8d; padding: 0.35rem 0.75rem; }
-    .select2-search__field { font-size: 0.875rem; }
-</style>
+<link rel="stylesheet" href="{{ asset('public/admin/assets/css/roles.css') }}" />
 @endpush
 
 @section('content')
@@ -91,7 +88,7 @@
                 <h5 class="modal-title fw-bold" id="modalTitle">New Role</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="roleForm" action="" method="POST">
+            <form id="roleForm" data-url="{{ url('admin/roles') }}" action="" method="POST">
                 @csrf
                 <input type="hidden" name="_method" id="formMethod" value="POST">
                 <div class="modal-body pt-4">
@@ -122,33 +119,5 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.select2-multiple').select2({
-            theme: 'bootstrap-5',
-            dropdownParent: $('#roleModal')
-        });
-    });
-
-    function openDialog(id = null, name = '', perms = []) {
-        var myModal = new bootstrap.Modal(document.getElementById('roleModal'));
-        var form = document.getElementById('roleForm');
-        
-        document.getElementById('name').value = name;
-        
-        $('#permissions').val(perms).trigger('change');
-        
-        if (id) {
-            document.getElementById('modalTitle').innerText = 'Edit Role';
-            document.getElementById('formMethod').value = 'PUT';
-            form.action = '{{ url("admin/roles") }}/' + id;
-        } else {
-            document.getElementById('modalTitle').innerText = 'New Role';
-            document.getElementById('formMethod').value = 'POST';
-            form.action = '{{ url("admin/roles") }}';
-        }
-        
-        myModal.show();
-    }
-</script>
+<script src="{{ asset('public/admin/assets/js/roles.js') }}"></script>
 @endpush

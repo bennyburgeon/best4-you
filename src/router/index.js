@@ -54,6 +54,11 @@ const routes = [
                 path: 'applications',
                 name: 'admin.applications',
                 component: () => import('@/admin/pages/JobApplications.vue'),
+            },
+            {
+                path: 'regions',
+                name: 'admin.regions',
+                component: () => import('@/admin/pages/Regions.vue'),
             }
         ]
     },

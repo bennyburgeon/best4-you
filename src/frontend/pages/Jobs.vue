@@ -88,6 +88,16 @@
                 <input v-model="filters.location" type="text" placeholder="Kozhikode, Kochi, Remote">
               </label>
 
+              <label class="panel-input">
+                <span>Region</span>
+                <select v-model="filters.region_id" @change="fetchJobs" style="background: transparent; border: 0; color: #2C2D3F; font-size: 14px; font-weight: 400; outline: 0; width: 100%;">
+                  <option value="">All Regions</option>
+                  <option v-for="region in regionsList" :key="region.id" :value="region.id">
+                    {{ region.name }}
+                  </option>
+                </select>
+              </label>
+
               <div class="panel-category">
                 <span>Category</span>
                 <div class="category-options">
@@ -146,6 +156,7 @@
                   <div class="job-meta-top">
                     <span v-if="job.job_code" class="code-pill"><i class="fa fa-hashtag"></i>{{ job.job_code }}</span>
                     <span class="category-pill">{{ job.category?.name || 'General' }}</span>
+                    <span v-if="job.region" class="category-pill" style="background: rgba(26, 118, 209, 0.1); color: #1a76d1;"><i class="fa fa-globe"></i> {{ job.region.name }}</span>
                     <span v-if="job.job_type" class="type-pill"><i class="fa fa-star"></i>{{ job.job_type?.name }}</span>
                     <span><i class="fa fa-clock-o"></i>{{ formatDaysAgo(job.posted_days_ago) }}</span>
                   </div>
@@ -207,6 +218,8 @@ const filters = ref({
   search: route.query.q || '',
   location: route.query.location || '',
   category_id: route.query.category_id || '',
+  region: route.query.region || '',
+  region_id: route.query.region_id || '',
 });
 
 const uniqueLocations = computed(() => {
@@ -224,10 +237,22 @@ const fetchCategories = async () => {
   }
 };
 
+const regionsList = ref([]);
+const fetchRegions = async () => {
+  try {
+    const res = await axios.get('/regions');
+    regionsList.value = Array.isArray(res.data) ? res.data : (res.data.data || []);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const activeFilterParams = () => ({
   ...(filters.value.search ? { search: filters.value.search } : {}),
   ...(filters.value.location ? { location: filters.value.location } : {}),
   ...(filters.value.category_id ? { category_id: filters.value.category_id } : {}),
+  ...(filters.value.region ? { region: filters.value.region } : {}),
+  ...(filters.value.region_id ? { region_id: filters.value.region_id } : {}),
 });
 
 const fetchJobs = async (syncRoute = true) => {
@@ -243,6 +268,8 @@ const fetchJobs = async (syncRoute = true) => {
           ...(filters.value.search ? { q: filters.value.search } : {}),
           ...(filters.value.location ? { location: filters.value.location } : {}),
           ...(filters.value.category_id ? { category_id: filters.value.category_id } : {}),
+          ...(filters.value.region ? { region: filters.value.region } : {}),
+          ...(filters.value.region_id ? { region_id: filters.value.region_id } : {}),
         },
       });
     }
@@ -254,7 +281,7 @@ const fetchJobs = async (syncRoute = true) => {
 };
 
 const clearFilters = () => {
-  filters.value = { search: '', location: '', category_id: '' };
+  filters.value = { search: '', location: '', category_id: '', region: '', region_id: '' };
   router.replace({ path: '/jobs' });
   fetchJobs();
 };
@@ -299,11 +326,14 @@ watch(() => route.query, (newQuery) => {
   filters.value.search = newQuery.q || '';
   filters.value.location = newQuery.location || '';
   filters.value.category_id = newQuery.category_id || '';
+  filters.value.region = newQuery.region || '';
+  filters.value.region_id = newQuery.region_id || '';
   fetchJobs(false);
 });
 
 onMounted(() => {
   fetchCategories();
+  fetchRegions();
   fetchJobs();
 });
 </script>

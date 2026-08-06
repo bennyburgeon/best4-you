@@ -26,7 +26,8 @@ class Job extends Model
         'opening_date',
         'closing_date',
         'gender_preference',
-        'job_type_id'
+        'job_type_id',
+        'region_id'
     ];
 
     protected $casts = [
@@ -62,5 +63,10 @@ class Job extends Model
     public function jobType()
     {
         return $this->belongsTo(JobType::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\IndustryType;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -36,7 +37,7 @@ class FrontendController extends Controller
 
     public function index(Request $request)
     {
-        $query = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType']);
+        $query = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType', 'region']);
 
         $today = now()->toDateString();
         $query->where(function($q) use ($today) {
@@ -70,16 +71,27 @@ class FrontendController extends Controller
             $query->where('industry_type_id', $request->industry_type_id);
         }
 
+        if ($request->filled('region_id')) {
+            $query->where('region_id', $request->region_id);
+        }
+
+        if ($request->filled('region')) {
+            $query->whereHas('region', function($q) use ($request) {
+                $q->where('slug', $request->region);
+            });
+        }
+
         $jobs = $query->latest()->paginate(10);
         $categories = JobCategory::all();
         $industryTypes = IndustryType::all();
+        $regions = Region::where('status', true)->get();
 
-        return view('frontend.index', compact('jobs', 'categories', 'industryTypes'));
+        return view('frontend.index', compact('jobs', 'categories', 'industryTypes', 'regions'));
     }
 
     public function show($job_code)
     {
-        $job = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType'])
+        $job = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType', 'region'])
                   ->where('job_code', $job_code)
                   ->firstOrFail();
 

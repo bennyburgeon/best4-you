@@ -35,11 +35,20 @@ const editedItem = ref({
     opening_date: null,
     closing_date: null,
     gender_preference: '',
-    skills: []
+    skills: [],
+    region_id: null
 });
 
 const currencies = ref([]);
 const clientsList = ref([]);
+const regionsList = ref([]);
+
+const fetchRegions = async () => {
+    try {
+        const response = await axios.get('/regions');
+        regionsList.value = Array.isArray(response.data) ? response.data : (response.data.data || []);
+    } catch (e) { console.error(e); }
+}
 
 const fetchJobs = async () => {
     loading.value = true;
@@ -106,7 +115,7 @@ const openDialog = (item = null) => {
             experience_min: null, experience_max: null, client_id: null,
             job_category_id: null, roles_and_responsibility: '', 
             hr_incharge: '', email: '', opening_date: null, closing_date: null,
-            gender_preference: '', skills: [] 
+            gender_preference: '', skills: [], region_id: null
         };
     }
     dialog.value = true;
@@ -146,6 +155,7 @@ onMounted(() => {
     fetchJobTypes();
     fetchSkills();
     fetchCurrenciesAndClients();
+    fetchRegions();
 });
 </script>
 
@@ -158,11 +168,11 @@ onMounted(() => {
         </template>
 
         <VCardText>
-          <VDataTable
             :headers="[
               { title: 'Code', key: 'job_code' },
               { title: 'Title', key: 'title' },
               { title: 'Company', key: 'company' },
+              { title: 'Region', key: 'region.name' },
               { title: 'Industry', key: 'industry_type.name' },
               { title: 'Dates', key: 'dates', sortable: false },
               { title: 'Actions', key: 'actions', sortable: false, align: 'right' }
@@ -220,6 +230,9 @@ onMounted(() => {
             </VCol>
             <VCol cols="12" md="4">
               <AppTextField v-model="editedItem.location" label="Location" />
+            </VCol>
+            <VCol cols="12" md="4">
+              <AppSelect2 v-model="editedItem.region_id" :items="regionsList" item-title="name" item-value="id" label="Job Region" />
             </VCol>
 
             <VCol cols="12" md="4">

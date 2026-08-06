@@ -232,6 +232,12 @@
                         <div>Job Types</div>
                     </a>
                 </div>
+                <div class="menu-item {{ request()->routeIs('regions.*') ? 'active' : '' }}">
+                    <a href="{{ route('regions.index') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-globe"></i>
+                        <div>Regions</div>
+                    </a>
+                </div>
                 <div class="menu-item {{ request()->routeIs('clients.*') ? 'active' : '' }}">
                     <a href="{{ route('clients.index') }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-building"></i>

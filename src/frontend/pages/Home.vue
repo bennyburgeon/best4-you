@@ -180,6 +180,56 @@
     </section>
     <!--/End Start schedule Area -->
 
+    <!-- Start Regions Section -->
+    <section class="regions-section section" style="background-color: #f9fafb; padding: 80px 0;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h2>Explore Opportunities by Region</h2>
+              <img :src="'/frontend/assets/img/section-img.png'" alt="Section Divider" />
+              <p>Discover your next career move across top global destinations.</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100 p-4" style="border-radius: 12px; transition: transform 0.3s ease;">
+              <div class="icon mb-3" style="font-size: 3rem; color: #1a76d1;"><i class="icofont-location-pin"></i></div>
+              <h4 class="fw-bold mb-2">Jobs in India</h4>
+              <p class="text-muted mb-3">Explore thousands of local opportunities in India's top cities.</p>
+              <router-link :to="{ path: '/jobs', query: { region: 'india' } }" class="btn btn-outline-primary btn-sm mt-auto" style="border-radius: 20px;">Browse Jobs</router-link>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100 p-4" style="border-radius: 12px; transition: transform 0.3s ease;">
+              <div class="icon mb-3" style="font-size: 3rem; color: #f59e0b;"><i class="icofont-location-pin"></i></div>
+              <h4 class="fw-bold mb-2">Jobs in Gulf</h4>
+              <p class="text-muted mb-3">Accelerate your career with lucrative positions in the Middle East.</p>
+              <router-link :to="{ path: '/jobs', query: { region: 'gulf' } }" class="btn btn-outline-primary btn-sm mt-auto" style="border-radius: 20px;">Browse Jobs</router-link>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100 p-4" style="border-radius: 12px; transition: transform 0.3s ease;">
+              <div class="icon mb-3" style="font-size: 3rem; color: #10b981;"><i class="icofont-location-pin"></i></div>
+              <h4 class="fw-bold mb-2">Jobs in Europe</h4>
+              <p class="text-muted mb-3">Discover career pathways and settle in beautiful European countries.</p>
+              <router-link :to="{ path: '/jobs', query: { region: 'europe' } }" class="btn btn-outline-primary btn-sm mt-auto" style="border-radius: 20px;">Browse Jobs</router-link>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100 p-4" style="border-radius: 12px; transition: transform 0.3s ease;">
+              <div class="icon mb-3" style="font-size: 3rem; color: #6b7280;"><i class="icofont-globe"></i></div>
+              <h4 class="fw-bold mb-2">Global / Others</h4>
+              <p class="text-muted mb-3">Explore opportunities in other international destinations.</p>
+              <router-link :to="{ path: '/jobs', query: { region: 'others' } }" class="btn btn-outline-primary btn-sm mt-auto" style="border-radius: 20px;">Browse Jobs</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ End Regions Section -->
+
     <!-- Start Why choose -->
     <section class="why-choose section">
       <div class="container">
@@ -808,3 +858,9 @@ onMounted(() => {
     setTimeout(initScripts, 500);
 });
 </script>
+
+<style scoped>
+.regions-section .card:hover {
+  transform: translateY(-8px);
+}
+</style>

@@ -15,6 +15,7 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegionController;
 
 // Public routes
 Route::get('/', [FrontendController::class, 'home'])->name('home');
@@ -48,4 +49,5 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
+    Route::resource('regions', RegionController::class);
 });

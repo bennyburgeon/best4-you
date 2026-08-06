@@ -15,8 +15,19 @@ class JobController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
+            $query = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType', 'region']);
+
+            if ($request->filled('region_id')) {
+                $query->where('region_id', $request->region_id);
+            }
+
+            if ($request->filled('region')) {
+                $query->whereHas('region', function ($q) use ($request) {
+                    $q->where('slug', $request->region);
+                });
+            }
+
             if ($request->has('draw')) {
-                $query = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType']);
                 return $this->paginateDataTable(
                     $query,
                     $request,
@@ -25,7 +36,7 @@ class JobController extends Controller
             }
             
             // Standard API response fallback if not DataTables draw
-            $jobs = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType'])->latest()->get();
+            $jobs = $query->latest()->get();
             return response()->json($jobs);
         }
 
@@ -44,7 +55,8 @@ class JobController extends Controller
             'jobTypes' => \App\Models\JobType::all(),
             'clientsList' => \App\Models\Client::all(),
             'currencies' => \App\Models\Currency::all(),
-            'skills' => \App\Models\Skill::all()
+            'skills' => \App\Models\Skill::all(),
+            'regions' => \App\Models\Region::all()
         ]);
     }
 
@@ -65,7 +77,8 @@ class JobController extends Controller
             'experience_min' => 'nullable|integer',
             'experience_max' => 'nullable|integer',
             'salary_from' => 'nullable|numeric',
-            'salary_to' => 'nullable|numeric'
+            'salary_to' => 'nullable|numeric',
+            'region_id' => 'nullable|exists:regions,id'
         ]);
 
         $data = $request->except(['skills', '_token', '_method']);
@@ -106,7 +119,8 @@ class JobController extends Controller
             'jobTypes' => \App\Models\JobType::all(),
             'clientsList' => \App\Models\Client::all(),
             'currencies' => \App\Models\Currency::all(),
-            'skills' => \App\Models\Skill::all()
+            'skills' => \App\Models\Skill::all(),
+            'regions' => \App\Models\Region::all()
         ]);
     }
 
@@ -127,7 +141,8 @@ class JobController extends Controller
             'experience_min' => 'nullable|integer',
             'experience_max' => 'nullable|integer',
             'salary_from' => 'nullable|numeric',
-            'salary_to' => 'nullable|numeric'
+            'salary_to' => 'nullable|numeric',
+            'region_id' => 'nullable|exists:regions,id'
         ]);
 
         $data = $request->except(['skills', '_token', '_method']);

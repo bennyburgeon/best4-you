@@ -52,7 +52,16 @@
                       <li><router-link to="/" active-class="active">Home</router-link></li>
                       <li><router-link to="/about" active-class="active">About</router-link></li>
                       <li><router-link to="/services" active-class="active">Services</router-link></li>
-                      <li><router-link to="/jobs" active-class="active">Jobs</router-link></li>
+                      <li>
+                        <router-link to="/jobs" active-class="active">Jobs <i class="icofont-rounded-down"></i></router-link>
+                        <ul class="dropdown">
+                          <li><router-link to="/jobs">All Jobs</router-link></li>
+                          <li><router-link :to="{ path: '/jobs', query: { region: 'india' } }">Jobs in India</router-link></li>
+                          <li><router-link :to="{ path: '/jobs', query: { region: 'gulf' } }">Jobs in Gulf</router-link></li>
+                          <li><router-link :to="{ path: '/jobs', query: { region: 'europe' } }">Jobs in Europe</router-link></li>
+                          <li><router-link :to="{ path: '/jobs', query: { region: 'others' } }">Other Jobs</router-link></li>
+                        </ul>
+                      </li>
                       <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
                     </ul>
                   </nav>

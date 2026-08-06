@@ -746,6 +746,18 @@
                 <input name="location" type="text" placeholder="Kozhikode, Kochi, Remote" value="{{ request('location') }}">
               </label>
 
+              <label class="panel-input">
+                <span>Region</span>
+                <select name="region_id" onchange="this.form.submit()">
+                  <option value="">All Regions</option>
+                  @foreach($regions as $region)
+                    <option value="{{ $region->id }}" {{ request('region_id') == $region->id ? 'selected' : '' }}>
+                      {{ $region->name }}
+                    </option>
+                  @endforeach
+                </select>
+              </label>
+
               <div class="panel-category">
                 <span>Category</span>
                 <input type="hidden" name="category_id" id="category_input" value="{{ request('category_id') }}">
@@ -813,6 +825,9 @@
                         <span class="code-pill"><i class="fa fa-hashtag"></i>{{ $job->job_code }}</span>
                     @endif
                     <span class="category-pill">{{ $job->category ? $job->category->name : 'General' }}</span>
+                    @if($job->region)
+                        <span class="category-pill" style="background: rgba(26, 118, 209, 0.1); color: #1a76d1;"><i class="fa fa-globe"></i> {{ $job->region->name }}</span>
+                    @endif
                     @if($job->jobType)
                         <span class="type-pill"><i class="fa fa-star"></i>{{ $job->jobType->name }}</span>
                     @endif

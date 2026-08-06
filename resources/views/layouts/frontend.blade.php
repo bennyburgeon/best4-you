@@ -100,7 +100,15 @@
                                             <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
                                             <li><a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About</a></li>
                                             <li><a href="{{ url('/services') }}" class="{{ request()->is('services') ? 'active' : '' }}">Services</a></li>
-                                            <li><a href="{{ url('/jobs') }}" class="{{ request()->is('jobs*') ? 'active' : '' }}">Jobs</a></li>
+                                            <li><a href="{{ url('/jobs') }}" class="{{ request()->is('jobs*') ? 'active' : '' }}">Jobs <i class="icofont-rounded-down"></i></a>
+                                                <ul class="dropdown">
+                                                    <li><a href="{{ url('/jobs') }}">All Jobs</a></li>
+                                                    <li><a href="{{ url('/jobs?region=india') }}">Jobs in India</a></li>
+                                                    <li><a href="{{ url('/jobs?region=gulf') }}">Jobs in Gulf</a></li>
+                                                    <li><a href="{{ url('/jobs?region=europe') }}">Jobs in Europe</a></li>
+                                                    <li><a href="{{ url('/jobs?region=others') }}">Other Jobs</a></li>
+                                                </ul>
+                                            </li>
                                             <li><a href="{{ url('/contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">Contact Us</a></li>
                                         </ul>
                                     </nav>

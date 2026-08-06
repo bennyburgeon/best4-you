@@ -16,6 +16,7 @@
             <div class="meta-row">
               <span v-if="job.job_code" class="code-pill"><i class="fa fa-hashtag"></i>{{ job.job_code }}</span>
               <span class="category-pill">{{ job.category?.name || 'General' }}</span>
+              <span v-if="job.region" class="category-pill" style="background: rgba(26, 118, 209, 0.25); color: #fff;"><i class="fa fa-globe"></i> {{ job.region.name }}</span>
               <span v-if="job.job_type" class="type-pill"><i class="fa fa-star"></i>{{ job.job_type?.name }}</span>
             </div>
             <h1>{{ job.title }}</h1>

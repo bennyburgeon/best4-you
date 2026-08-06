@@ -90,9 +90,9 @@
 
               <label class="panel-input">
                 <span>Region</span>
-                <select v-model="filters.region_id" @change="fetchJobs" style="background: transparent; border: 0; color: #2C2D3F; font-size: 14px; font-weight: 400; outline: 0; width: 100%;">
+                <select v-model="filters.region" @change="fetchJobs" style="background: transparent; border: 0; color: #2C2D3F; font-size: 14px; font-weight: 400; outline: 0; width: 100%;">
                   <option value="">All Regions</option>
-                  <option v-for="region in regionsList" :key="region.id" :value="region.id">
+                  <option v-for="region in regionsList" :key="region.id" :value="region.slug">
                     {{ region.name }}
                   </option>
                 </select>

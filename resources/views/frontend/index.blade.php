@@ -773,7 +773,7 @@
               <form action="{{ url('/jobs') }}" method="GET" class="filter-panel">
               <div class="panel-heading">
                 <span>Refine Search</span>
-                @if(request()->hasAny(['search', 'location', 'category_id']))
+                @if(request()->hasAny(['search', 'location', 'category_id', 'region', 'region_id']))
                 <a href="{{ url('/jobs') }}" class="btn btn-sm btn-light text-danger rounded-pill px-3">
                   Clear
                 </a>
@@ -792,10 +792,10 @@
 
               <label class="panel-input">
                 <span>Region</span>
-                <select name="region_id" onchange="this.form.submit()">
+                <select name="region" onchange="this.form.submit()">
                   <option value="">All Regions</option>
                   @foreach($regions as $region)
-                    <option value="{{ $region->id }}" {{ request('region_id') == $region->id ? 'selected' : '' }}>
+                    <option value="{{ $region->slug }}" {{ (request('region_id') == $region->id || request('region') == $region->slug) ? 'selected' : '' }}>
                       {{ $region->name }}
                     </option>
                   @endforeach

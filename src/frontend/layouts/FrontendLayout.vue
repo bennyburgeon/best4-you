@@ -56,10 +56,9 @@
                         <router-link to="/jobs" active-class="active">Jobs <i class="icofont-rounded-down"></i></router-link>
                         <ul class="dropdown">
                           <li><router-link to="/jobs">All Jobs</router-link></li>
-                          <li><router-link :to="{ path: '/jobs', query: { region: 'india' } }">Jobs in India</router-link></li>
-                          <li><router-link :to="{ path: '/jobs', query: { region: 'gulf' } }">Jobs in Gulf</router-link></li>
-                          <li><router-link :to="{ path: '/jobs', query: { region: 'europe' } }">Jobs in Europe</router-link></li>
-                          <li><router-link :to="{ path: '/jobs', query: { region: 'others' } }">Other Jobs</router-link></li>
+                          <li v-for="reg in regions" :key="reg.id">
+                            <router-link :to="{ path: '/jobs', query: { region: reg.slug } }">Jobs in {{ reg.name }}</router-link>
+                          </li>
                         </ul>
                       </li>
                       <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
@@ -153,10 +152,22 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+
+const regions = ref([]);
+
+const fetchRegions = async () => {
+  try {
+    const res = await axios.get('/regions?all=1');
+    regions.value = res.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 onMounted(() => {
-    // Re-initialize main.js from template if needed
+    fetchRegions();
     if (window.initMain) window.initMain();
 });
 </script>

@@ -103,10 +103,11 @@
                                             <li><a href="{{ url('/jobs') }}" class="{{ request()->is('jobs*') ? 'active' : '' }}">Jobs <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="{{ url('/jobs') }}">All Jobs</a></li>
-                                                    <li><a href="{{ url('/jobs?region=india') }}">Jobs in India</a></li>
-                                                    <li><a href="{{ url('/jobs?region=gulf') }}">Jobs in Gulf</a></li>
-                                                    <li><a href="{{ url('/jobs?region=europe') }}">Jobs in Europe</a></li>
-                                                    <li><a href="{{ url('/jobs?region=others') }}">Other Jobs</a></li>
+                                                    @if(isset($globalRegions))
+                                                        @foreach($globalRegions as $reg)
+                                                            <li><a href="{{ url('/jobs?region=' . $reg->slug) }}">Jobs in {{ $reg->name }}</a></li>
+                                                        @endforeach
+                                                    @endif
                                                 </ul>
                                             </li>
                                             <li><a href="{{ url('/contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">Contact Us</a></li>

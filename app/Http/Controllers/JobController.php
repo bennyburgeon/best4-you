@@ -129,7 +129,7 @@ class JobController extends Controller
         $request->validate([
             'job_code' => 'nullable|string|unique:jobs,job_code,' . $job->id,
             'title' => 'required|string|max:255',
-            'job_category_id' => 'required',
+            'job_category_id' => 'required|exists:job_categories,id',
             'industry_type_id' => 'nullable|exists:industry_types,id',
             'job_type_id' => 'nullable|exists:job_types,id',
             'skills' => 'nullable|array',
@@ -152,7 +152,7 @@ class JobController extends Controller
         $category = \App\Models\JobCategory::find($job->job_category_id);
         $jobType = \App\Models\JobType::find($job->job_type_id);
         
-        $catSymbol = $category->symbol ?: strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $category->name), 0, 3));
+        $catSymbol = $category ? ($category->symbol ?: strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $category->name), 0, 3))) : 'GEN';
         $typeLabel = $jobType ? strtoupper(substr($jobType->name, 0, 2)) : 'GEN';
         $serial = str_pad($job->id, 4, '0', STR_PAD_LEFT);
         

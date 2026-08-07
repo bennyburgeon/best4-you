@@ -124,10 +124,9 @@
         
         myModal.show();
     }
-
-    @push('scripts')
-    {!! $dataTable->scripts() !!}
-    <script>
+</script>
+{!! $dataTable->scripts() !!}
+<script>
         $(function() {
             // Live search: trigger redraw on every change or keyup in searchForm
             $('#searchForm input, #searchForm select').on('keyup change input', function () {

@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobType;
-use App\Traits\HandlesDataTables;
+use App\DataTables\JobTypesDataTable;
 use Illuminate\Http\Request;
 
 class JobTypeController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, JobTypesDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(JobType::query(), $request, ['name']);
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(JobType::latest()->get());
         }
 
-        return view('admin.job-types.index');
+        return $dataTable->render('admin.job-types.index');
     }
 
     public function store(Request $request)

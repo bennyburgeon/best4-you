@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Currency;
-use App\Traits\HandlesDataTables;
+use App\DataTables\CurrenciesDataTable;
 use Illuminate\Http\Request;
 
 class CurrencyController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, CurrenciesDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(Currency::query(), $request, ['name', 'code']);
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(Currency::latest()->get());
         }
 
-        return view('admin.currencies.index');
+        return $dataTable->render('admin.currencies.index');
     }
 
     

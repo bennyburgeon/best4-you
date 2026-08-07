@@ -40,20 +40,7 @@
         ])
 
         <div class="table-responsive text-nowrap rounded-3 border">
-            <table class="table table-hover mb-0" id="currencyTable">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">ID</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Code</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Name</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Symbol</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem; width: 150px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    {{-- Loaded dynamically --}}
-                </tbody>
-            </table>
+            {!! $dataTable->table(['class' => 'table table-hover mb-0', 'id' => 'currencyTable']) !!}
         </div>
     </div>
 </div>
@@ -121,72 +108,16 @@
         myModal.show();
     }
 
-    $(function() {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        var columnsConfig = [
-            { 
-                data: 'id', 
-                name: 'id',
-                render: function(data, type, row) {
-                    return '<span class="fw-medium">#' + data + '</span>';
+    @push('scripts')
+    {!! $dataTable->scripts() !!}
+    <script>
+        $(function() {
+            // Live search: trigger redraw on every change or keyup in searchForm
+            $('#searchForm input, #searchForm select').on('keyup change input', function () {
+                if (window.LaravelDataTables && window.LaravelDataTables["currencyTable"]) {
+                    window.LaravelDataTables["currencyTable"].draw();
                 }
-            },
-            { 
-                data: 'code', 
-                name: 'code',
-                render: function(data) {
-                    return '<span class="badge bg-label-primary">' + escapeHtml(data) + '</span>';
-                }
-            },
-            { 
-                data: 'name', 
-                name: 'name' 
-            },
-            { 
-                data: 'symbol', 
-                name: 'symbol' 
-            },
-            {
-                data: null,
-                orderable: false,
-                searchable: false,
-                className: 'text-center',
-                render: function(data, type, row) {
-                    var escapedCode = escapeHtml(row.code).replace(/'/g, "\\'");
-                    var escapedName = escapeHtml(row.name).replace(/'/g, "\\'");
-                    var escapedSymbol = escapeHtml(row.symbol).replace(/'/g, "\\'");
-                    
-                    var editBtn = '<button type="button" class="btn btn-sm btn-info text-white" onclick="openDialog(' + row.id + ', \'' + escapedCode + '\', \'' + escapedName + '\', \'' + escapedSymbol + '\')">' +
-                        '<i class="bx bx-edit-alt me-1"></i> Edit' +
-                        '</button>';
-                        
-                    var deleteUrl = '{{ route("currencies.destroy", ":id") }}'.replace(':id', row.id);
-                    
-                    var deleteBtn = '<form action="' + deleteUrl + '" method="POST" class="d-inline" onsubmit="return confirm(\'Are you sure you want to delete this currency?\');">' +
-                        '<input type="hidden" name="_token" value="' + csrfToken + '">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '<button type="submit" class="btn btn-sm btn-danger">' +
-                        '<i class="bx bx-trash me-1"></i> Delete' +
-                        '</button>' +
-                        '</form>';
-                        
-                    return '<div class="d-flex justify-content-center gap-2">' + editBtn + deleteBtn + '</div>';
-                }
-            }
-        ];
-
-        initializeAdminDataTable('#currencyTable', '{{ route("currencies.index") }}', columnsConfig, '#searchForm', [[0, 'desc']]);
-    });
-</script>
-@endpush
+            });
+        });
+    </script>
+    @endpush

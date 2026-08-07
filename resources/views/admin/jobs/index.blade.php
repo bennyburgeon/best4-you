@@ -60,21 +60,7 @@
         ])
 
         <div class="table-responsive text-nowrap rounded-3 border">
-            <table class="table table-hover mb-0" id="jobTable">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Code</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Title</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Company</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Industry</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Dates</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem; width: 220px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    {{-- Loaded dynamically --}}
-                </tbody>
-            </table>
+            {!! $dataTable->table(['class' => 'table table-hover mb-0', 'id' => 'jobTable']) !!}
         </div>
     </div>
 </div>
@@ -84,143 +70,29 @@
 @endsection
 
 @push('scripts')
+{!! $dataTable->scripts() !!}
 <script>
     $(function() {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function formatDate(dateStr) {
-            if (!dateStr) return 'N/A';
-            var date = new Date(dateStr);
-            if (isNaN(date.getTime())) return 'N/A';
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return months[date.getMonth()] + ' ' + String(date.getDate()).padStart(2, '0') + ', ' + date.getFullYear();
-        }
-
-        var columnsConfig = [
-            { 
-                data: 'job_code', 
-                name: 'job_code',
-                render: function(data) {
-                    return '<span class="badge bg-label-primary">' + escapeHtml(data || 'N/A') + '</span>';
-                }
-            },
-            { 
-                data: 'title', 
-                name: 'title',
-                className: 'fw-medium'
-            },
-            { 
-                data: 'client', 
-                name: 'client.title',
-                orderable: false,
-                render: function(data, type, row) {
-                    return data ? escapeHtml(data.title) : escapeHtml(row.company || '-');
-                }
-            },
-            { 
-                data: 'industry_type', 
-                name: 'industryType.name',
-                orderable: false,
-                render: function(data) {
-                    return data ? escapeHtml(data.name) : '-';
-                }
-            },
-            { 
-                data: null, 
-                orderable: false,
-                render: function(data, type, row) {
-                    var openStr = row.opening_date ? formatDate(row.opening_date) : 'N/A';
-                    var closeStr = row.closing_date ? formatDate(row.closing_date) : 'N/A';
-                    
-                    return '<div class="small">' +
-                        '<div class="text-success"><i class="bx bx-calendar-check me-1"></i>' + openStr + '</div>' +
-                        '<div class="text-danger"><i class="bx bx-calendar-x me-1"></i>' + closeStr + '</div>' +
-                        '</div>';
-                }
-            },
-            {
-                data: null,
-                orderable: false,
-                searchable: false,
-                className: 'text-center',
-                render: function(data, type, row) {
-                    var escapedTitle = escapeHtml(row.title).replace(/'/g, "\\'");
-                    var escapedCode = escapeHtml(row.job_code || 'N/A').replace(/'/g, "\\'");
-                    
-                    // Format description for copy button
-                    var cleanDesc = (row.roles_and_responsibility || '')
-                        .replace(/<p>|<\/p>|<div>|<\/div>|<li>|<\/li>|<br>|<br\/>|<br \/>/g, '\n')
-                        .replace(/•/g, '\n• ')
-                        .replace(/<[^>]*>/g, '')
-                        .replace(/\n+/g, '\n')
-                        .trim();
-                    var escapedDesc = escapeHtml(cleanDesc).replace(/'/g, "\\'");
-                        
-                    var skillsStr = (row.skills || []).map(function(s) { return s.name; }).join(', ') || 'N/A';
-                    var escapedSkills = escapeHtml(skillsStr).replace(/'/g, "\\'");
-                    
-                    var categoryName = row.category ? row.category.name : 'N/A';
-                    var jobTypeName = row.job_type ? row.job_type.name : 'N/A';
-                    var industryName = row.industry_type ? row.industry_type.name : 'N/A';
-                    var clientName = row.client ? row.client.title : (row.company || 'N/A');
-                    
-                    var expMin = row.experience_min;
-                    var expMax = row.experience_max;
-                    var experienceStr = (expMin !== null && expMax !== null) ? (expMin + ' - ' + expMax + ' years') : 'Not Specified';
-                    
-                    var currencySymbol = row.currency ? row.currency.symbol : '$';
-                    var salaryStr = (row.salary_from && row.salary_to) ? (currencySymbol + ' ' + row.salary_from + ' - ' + row.salary_to) : 'Not Specified';
-                    
-                    var openingStr = row.opening_date ? formatDate(row.opening_date) : 'N/A';
-                    var closingStr = row.closing_date ? formatDate(row.closing_date) : 'N/A';
-                    var applyLink = window.location.origin + '/jobs/' + (row.job_code || row.id);
-                    
-                    var copyBtn = '<button type="button" class="btn btn-sm btn-outline-primary copy-job-btn" ' +
-                        'data-title="' + escapedTitle + '" ' +
-                        'data-code="' + escapedCode + '" ' +
-                        'data-description="' + escapedDesc + '" ' +
-                        'data-skills="' + escapedSkills + '" ' +
-                        'data-opening="' + openingStr + '" ' +
-                        'data-closing="' + closingStr + '" ' +
-                        'data-category="' + escapeHtml(categoryName) + '" ' +
-                        'data-jobtype="' + escapeHtml(jobTypeName) + '" ' +
-                        'data-industry="' + escapeHtml(industryName) + '" ' +
-                        'data-experience="' + escapeHtml(experienceStr) + '" ' +
-                        'data-salary="' + escapeHtml(salaryStr) + '" ' +
-                        'data-link="' + escapeHtml(applyLink) + '">' +
-                        '<i class="bx bx-copy"></i> Copy' +
-                        '</button>';
-                        
-                    var editUrl = '{{ route("jobs.edit", ":id") }}'.replace(':id', row.id);
-                    var editBtn = '<a href="' + editUrl + '" class="btn btn-sm btn-info text-white">' +
-                        '<i class="bx bx-edit-alt"></i> Edit' +
-                        '</a>';
-                        
-                    var deleteUrl = '{{ route("jobs.destroy", ":id") }}'.replace(':id', row.id);
-                    var deleteBtn = '<form action="' + deleteUrl + '" method="POST" class="d-inline" onsubmit="return confirm(\'Are you sure you want to delete this job?\');">' +
-                        '<input type="hidden" name="_token" value="' + csrfToken + '">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '<button type="submit" class="btn btn-sm btn-danger">' +
-                        '<i class="bx bx-trash"></i> Delete' +
-                        '</button>' +
-                        '</form>';
-                        
-                    return '<div class="d-flex justify-content-center gap-1">' + copyBtn + editBtn + deleteBtn + '</div>';
-                }
+        // Redraw table when search filters change
+        $('#searchForm input, #searchForm select').on('keyup change input', function () {
+            if (window.LaravelDataTables && window.LaravelDataTables["jobTable"]) {
+                window.LaravelDataTables["jobTable"].draw();
             }
-        ];
+        });
 
-        initializeAdminDataTable('#jobTable', '{{ route("jobs.index") }}', columnsConfig, '#searchForm', [[0, 'desc']]);
+        // Initialize flatpickr range pickers if present and trigger table redraw on close
+        if (typeof flatpickr !== 'undefined') {
+            $('.flatpickr-range').flatpickr({
+                mode: 'range',
+                dateFormat: 'Y-m-d',
+                allowInput: true,
+                onClose: function(selectedDates, dateStr, instance) {
+                    if (window.LaravelDataTables && window.LaravelDataTables["jobTable"]) {
+                        window.LaravelDataTables["jobTable"].draw();
+                    }
+                }
+            });
+        }
 
         // Re-bind the copy job details action handler
         $(document).on('click', '.copy-job-btn', function() {

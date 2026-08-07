@@ -219,3 +219,41 @@ Management of listings and metadata is protected by role-based access controls.
     2.  To tweak layouts or edit schemas, modify the Vue templates which utilize standard Vuetify components (`v-card`, `v-data-table`, `v-dialog`).
 *   **To Access Attached Resumes**:
     *   Always use `$application->resume_url` (derived via `$this->getFirstMediaUrl('resume')`) rather than hardcoding the public file path.
+
+---
+
+## 7. Data Listing & DataTable Architecture
+
+All database listings in the admin panel utilize the `yajra/laravel-datatables` package coupled with the **DataTable Service Class** pattern to ensure clean, separation-of-concerns-focused code.
+
+### Guidelines for Creating New Listings:
+1. **Generate the DataTable class**:
+   Run the following artisan command:
+   ```bash
+   php artisan datatables:make ModelNamesDataTable
+   ```
+2. **Configure the Service Class** (`app/DataTables/ModelNamesDataTable.php`):
+   - Define relationships and query filters inside `query()`.
+   - Format specific cells (e.g. badges, custom HTML actions, or formatted dates) in the `dataTable()` method using `editColumn()` and `addColumn()`.
+   - Wrap interactive actions (Copy, Edit, Delete) in a dedicated Blade view file under `resources/views/admin/models/partials/actions.blade.php` and load it via `view()->render()`.
+3. **Controller Setup**:
+   Inject the DataTable class into your controller's `index()` method and delegate rendering:
+   ```php
+   public function index(Request $request, ModelNamesDataTable $dataTable)
+   {
+       if ($request->wantsJson() && !$request->ajax()) {
+           return response()->json(ModelName::latest()->get()); // API fallback
+       }
+       return $dataTable->render('admin.models.index');
+   }
+   ```
+4. **Blade View Setup** (`resources/views/admin/models/index.blade.php`):
+   - Include `{!! $dataTable->table(['class' => 'table table-hover mb-0', 'id' => 'modelTable']) !!}` in the layout structure.
+   - Include `{!! $dataTable->scripts() !!}` inside `@push('scripts')`.
+   - Bind search accordion inputs to trigger redraw:
+     ```javascript
+     $('#searchForm input, #searchForm select').on('keyup change input', function () {
+         window.LaravelDataTables["modelTable"].draw();
+     });
+     ```
+

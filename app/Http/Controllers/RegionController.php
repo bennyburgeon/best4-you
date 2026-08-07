@@ -3,24 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
-use App\Traits\HandlesDataTables;
+use App\DataTables\RegionsDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class RegionController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, RegionsDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            if ($request->has('all')) {
-                return response()->json(Region::all());
-            }
-            return $this->paginateDataTable(Region::query(), $request, ['name']);
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(Region::latest()->get());
         }
 
-        return view('admin.regions.index');
+        if ($request->ajax() && $request->has('all')) {
+            return response()->json(Region::all());
+        }
+
+        return $dataTable->render('admin.regions.index');
     }
 
     public function create()

@@ -3,25 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Traits\HandlesDataTables;
+use App\DataTables\ClientsDataTable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, ClientsDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(
-                Client::query(),
-                $request,
-                ['title', 'contact_email', 'contact_number']
-            );
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(Client::latest()->get());
         }
 
-        return view('admin.clients.index');
+        return $dataTable->render('admin.clients.index');
     }
 
     

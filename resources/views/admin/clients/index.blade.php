@@ -50,20 +50,7 @@
         ])
 
         <div class="table-responsive text-nowrap rounded-3 border">
-            <table class="table table-hover mb-0" id="clientTable">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Company Name</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Contact</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">HR Contact</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem;">Verified</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem; width: 150px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    {{-- Loaded dynamically --}}
-                </tbody>
-            </table>
+            {!! $dataTable->table(['class' => 'table table-hover mb-0', 'id' => 'clientTable']) !!}
         </div>
     </div>
 </div>
@@ -192,109 +179,16 @@
         myModal.show();
     }
 
-    $(function() {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        var columnsConfig = [
-            { 
-                data: 'title', 
-                name: 'title',
-                render: function(data, type, row) {
-                    var logoHtml = '';
-                    if (row.logo) {
-                        logoHtml = '<img src="' + row.logo + '" alt="Logo" class="rounded me-3" width="30" height="30" style="object-fit: contain;">';
-                    } else {
-                        logoHtml = '<div class="bg-light rounded me-3 d-flex align-items-center justify-content-center text-muted" style="width: 30px; height: 30px;"><i class="bx bx-building"></i></div>';
-                    }
-                    return '<div class="d-flex align-items-center">' + logoHtml + '<span class="fw-medium">' + escapeHtml(data) + '</span></div>';
+    @push('scripts')
+    {!! $dataTable->scripts() !!}
+    <script>
+        $(function() {
+            // Live search: trigger redraw on every change or keyup in searchForm
+            $('#searchForm input, #searchForm select').on('keyup change input', function () {
+                if (window.LaravelDataTables && window.LaravelDataTables["clientTable"]) {
+                    window.LaravelDataTables["clientTable"].draw();
                 }
-            },
-            { 
-                data: null, 
-                orderable: false,
-                render: function(data, type, row) {
-                    var contactHtml = '<div class="small">';
-                    if (row.contact_email) {
-                        contactHtml += '<div class="text-muted"><i class="bx bx-envelope me-1"></i>' + escapeHtml(row.contact_email) + '</div>';
-                    }
-                    if (row.contact_number) {
-                        contactHtml += '<div class="text-muted"><i class="bx bx-phone me-1"></i>' + escapeHtml(row.contact_number) + '</div>';
-                    }
-                    contactHtml += '</div>';
-                    return contactHtml;
-                }
-            },
-            { 
-                data: null, 
-                orderable: false,
-                render: function(data, type, row) {
-                    var hrHtml = '<div class="small">';
-                    if (row.hr_name) {
-                        hrHtml += '<div class="fw-medium">' + escapeHtml(row.hr_name) + '</div>';
-                    }
-                    if (row.hr_email) {
-                        hrHtml += '<div class="text-muted"><i class="bx bx-envelope me-1"></i>' + escapeHtml(row.hr_email) + '</div>';
-                    }
-                    hrHtml += '</div>';
-                    return hrHtml;
-                }
-            },
-            { 
-                data: 'verified', 
-                name: 'verified',
-                className: 'text-center',
-                render: function(data) {
-                    if (data == 1 || data == true) {
-                        return '<span class="badge bg-label-success"><i class="bx bx-check-circle"></i> Verified</span>';
-                    }
-                    return '<span class="badge bg-label-secondary">Unverified</span>';
-                }
-            },
-            {
-                data: null,
-                orderable: false,
-                searchable: false,
-                className: 'text-center',
-                render: function(data, type, row) {
-                    var escapedTitle = escapeHtml(row.title).replace(/'/g, "\\'");
-                    var escapedEmail = escapeHtml(row.contact_email || '').replace(/'/g, "\\'");
-                    var escapedPhone = escapeHtml(row.contact_number || '').replace(/'/g, "\\'");
-                    var escapedHrName = escapeHtml(row.hr_name || '').replace(/'/g, "\\'");
-                    var escapedHrEmail = escapeHtml(row.hr_email || '').replace(/'/g, "\\'");
-                    var escapedHrContact = escapeHtml(row.hr_contact || '').replace(/'/g, "\\'");
-                    var logoUrl = row.logo || '';
-                    var verifiedVal = (row.verified == 1 || row.verified == true) ? 1 : 0;
-                    
-                    var editBtn = '<button type="button" class="btn btn-sm btn-info text-white" onclick="openDialog(' + row.id + ', \'' + escapedTitle + '\', ' + verifiedVal + ', \'' + escapedEmail + '\', \'' + escapedPhone + '\', \'' + escapedHrName + '\', \'' + escapedHrEmail + '\', \'' + escapedHrContact + '\', \'' + logoUrl + '\')">' +
-                        '<i class="bx bx-edit-alt me-1"></i> Edit' +
-                        '</button>';
-                        
-                    var deleteUrl = '{{ route("clients.destroy", ":id") }}'.replace(':id', row.id);
-                    
-                    var deleteBtn = '<form action="' + deleteUrl + '" method="POST" class="d-inline" onsubmit="return confirm(\'Are you sure you want to delete this client?\');">' +
-                        '<input type="hidden" name="_token" value="' + csrfToken + '">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '<button type="submit" class="btn btn-sm btn-danger">' +
-                        '<i class="bx bx-trash me-1"></i> Delete' +
-                        '</button>' +
-                        '</form>';
-                        
-                    return '<div class="d-flex justify-content-center gap-2">' + editBtn + deleteBtn + '</div>';
-                }
-            }
-        ];
-
-        initializeAdminDataTable('#clientTable', '{{ route("clients.index") }}', columnsConfig, '#searchForm', [[0, 'desc']]);
-    });
-</script>
-@endpush
+            });
+        });
+    </script>
+    @endpush

@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobCategory;
-use App\Traits\HandlesDataTables;
+use App\DataTables\JobCategoriesDataTable;
 use Illuminate\Http\Request;
 
 class JobCategoryController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, JobCategoriesDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(
-                JobCategory::with('parent'),
-                $request,
-                ['name']
-            );
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(JobCategory::latest()->get());
         }
 
-        return view('admin.job-categories.index', [
+        return $dataTable->render('admin.job-categories.index', [
             'categories' => JobCategory::all()
         ]);
     }

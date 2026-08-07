@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skill;
-use App\Traits\HandlesDataTables;
+use App\DataTables\SkillsDataTable;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, SkillsDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(Skill::query(), $request, ['name']);
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(Skill::latest()->get());
         }
 
-        return view('admin.skills.index');
+        return $dataTable->render('admin.skills.index');
     }
 
     public function create()

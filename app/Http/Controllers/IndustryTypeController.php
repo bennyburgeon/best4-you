@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\IndustryType;
-use App\Traits\HandlesDataTables;
+use App\DataTables\IndustryTypesDataTable;
 use Illuminate\Http\Request;
 
 class IndustryTypeController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, IndustryTypesDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->paginateDataTable(IndustryType::query(), $request, ['name']);
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(IndustryType::latest()->get());
         }
 
-        return view('admin.industry-types.index');
+        return $dataTable->render('admin.industry-types.index');
     }
 
     

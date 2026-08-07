@@ -6,15 +6,13 @@ use App\Models\Job;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
-use App\Traits\HandlesDataTables;
+use App\DataTables\JobsDataTable;
 
 class JobController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, JobsDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->wantsJson() && !$request->ajax()) {
             $query = Job::with(['category', 'skills', 'client', 'currency', 'industryType', 'jobType', 'region']);
 
             if ($request->filled('region_id')) {
@@ -27,20 +25,10 @@ class JobController extends Controller
                 });
             }
 
-            if ($request->has('draw')) {
-                return $this->paginateDataTable(
-                    $query,
-                    $request,
-                    ['job_code', 'title']
-                );
-            }
-            
-            // Standard API response fallback if not DataTables draw
-            $jobs = $query->latest()->get();
-            return response()->json($jobs);
+            return response()->json($query->latest()->get());
         }
 
-        return view('admin.jobs.index', [
+        return $dataTable->render('admin.jobs.index', [
             'clients' => \App\Models\Client::orderBy('title')->get(),
             'industryTypes' => \App\Models\IndustryType::orderBy('name')->get()
         ]);

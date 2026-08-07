@@ -40,20 +40,7 @@
         ])
 
         <div class="table-responsive text-nowrap rounded-3 border">
-            <table class="table table-hover mb-0" id="regionTable" data-ajax-url="{{ route('regions.index') }}" data-destroy-url="{{ route('regions.destroy', ':id') }}">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">ID</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Name</th>
-                        <th class="text-uppercase" style="font-size: 0.75rem;">Slug</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem;">Status</th>
-                        <th class="text-uppercase text-center" style="font-size: 0.75rem; width: 150px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    {{-- Loaded dynamically --}}
-                </tbody>
-            </table>
+            {!! $dataTable->table(['class' => 'table table-hover mb-0', 'id' => 'regionTable']) !!}
         </div>
     </div>
 </div>
@@ -98,4 +85,5 @@
 
 @push('scripts')
 <script src="{{ asset('public/admin/assets/js/regions.js') }}"></script>
+{!! $dataTable->scripts() !!}
 @endpush

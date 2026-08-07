@@ -3,25 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
-use App\Traits\HandlesDataTables;
+use App\DataTables\JobApplicationsDataTable;
 use Illuminate\Http\Request;
 
 class JobApplicationController extends Controller
 {
-    use HandlesDataTables;
-
-    public function index(Request $request)
+    public function index(Request $request, JobApplicationsDataTable $dataTable)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            $query = JobApplication::with(['job', 'job.category']);
-            return $this->paginateDataTable(
-                $query,
-                $request,
-                ['name', 'phone']
-            );
+        if ($request->wantsJson() && !$request->ajax()) {
+            return response()->json(JobApplication::latest()->get());
         }
 
-        return view('admin.job-applications.index', [
+        return $dataTable->render('admin.job-applications.index', [
             'jobs' => \App\Models\Job::orderBy('title')->get()
         ]);
     }

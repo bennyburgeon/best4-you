@@ -122,13 +122,17 @@ class JobApplicationsDataTable extends DataTable
         return $this->builder()
                     ->setTableId('applicationTable')
                     ->columns($this->getColumns())
-                    ->minifiedAjax('', 'function(d) {
-                        if ($("#searchForm").length) {
-                            $("#searchForm").serializeArray().forEach(function(item) {
-                                d[item.name] = item.value;
-                            });
-                        }
-                    }')
+                    ->ajax([
+                        'url' => '',
+                        'headers' => ['Accept' => 'application/json'],
+                        'data' => 'function(d) {
+                            if ($("#searchForm").length) {
+                                $("#searchForm").serializeArray().forEach(function(item) {
+                                    d[item.name] = item.value;
+                                });
+                            }
+                        }',
+                    ])
                     ->orderBy(4, 'desc') // Sort by created_at (index 4) in descending order by default
                     ->selectStyleSingle()
                     ->parameters([

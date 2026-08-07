@@ -117,13 +117,17 @@ class JobsDataTable extends DataTable
         return $this->builder()
                     ->setTableId('jobTable')
                     ->columns($this->getColumns())
-                    ->minifiedAjax('', 'function(d) {
-                        if ($("#searchForm").length) {
-                            $("#searchForm").serializeArray().forEach(function(item) {
-                                d[item.name] = item.value;
-                            });
-                        }
-                    }')
+                    ->ajax([
+                        'url' => '',
+                        'headers' => ['Accept' => 'application/json'],
+                        'data' => 'function(d) {
+                            if ($("#searchForm").length) {
+                                $("#searchForm").serializeArray().forEach(function(item) {
+                                    d[item.name] = item.value;
+                                });
+                            }
+                        }',
+                    ])
                     ->orderBy(6, 'desc') // Sort by ID (index 6) in descending order by default
                     ->selectStyleSingle()
                     ->parameters([

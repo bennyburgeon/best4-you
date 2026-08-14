@@ -1,6 +1,55 @@
 @extends('layouts.frontend')
 
-@section('title', 'Home')
+@section('title', 'Best Job Consultancy in India | Best4U Careers')
+@section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
+@section('canonical')
+<link rel="canonical" href="https://best4ucareers.com/" />
+@endsection
+@section('og_tags')
+<meta property="og:url" content="https://best4ucareers.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Best Job Consultancy in India | Best4U Careers">
+<meta property="og:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta property="og:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://best4ucareers.com/">
+<meta name="twitter:title" content="Best Job Consultancy in India | Best4U Careers">
+<meta name="twitter:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta name="twitter:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+@endsection
+@section('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EmploymentAgency",
+  "name": "Best4U Careers",
+  "url": "https://best4ucareers.com/",
+  "telephone": "+91 7594008787",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1587/H, Elayambari House (Ambadi Building), Florican Road, Malaparamba, Kozhikode, Kerala",
+    "addressLocality": "Kozhikode",
+    "postalCode": "673009",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 11.2923445,
+    "longitude": 75.79813860000002
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "06:00"
+  },
+  "sameAs": [
+    "https://www.facebook.com/bestforyouhrconsultancyIndia/",
+    "https://www.instagram.com/bestforyouhrconsultancy_India/"
+  ]
+}
+</script>
+@endsection
 
 @push('styles')
 <style>
@@ -117,10 +166,10 @@
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="text">
-                                <h1>
+                                <h2>
                                     Best <span>Job Consultancy </span> in India<br>
                                     <span>Find Your Dream Job</span> with Confidence
-                                </h1>
+                                </h2>
                                 <p>
                                     We connect skilled job seekers with trusted employers in
                                     India and abroad — helping you build a successful career.
@@ -138,10 +187,10 @@
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="text">
-                                <h1>
+                                <h2>
                                     Best <span>Job Consultancy </span> in India<br>
                                     <span>Find Your Dream Job</span> with Confidence
-                                </h1>
+                                </h2>
                                 <p>
                                     We connect skilled job seekers with trusted employers in
                                     India and abroad — helping you build a successful career.

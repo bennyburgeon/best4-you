@@ -1,6 +1,22 @@
 @extends('layouts.frontend')
 
-@section('title', 'Our Services')
+@section('title', 'Job Placement Services in Kerala | Best4U Careers')
+@section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
+@section('canonical')
+<link rel="canonical" href="https://best4ucareers.com/services" />
+@endsection
+@section('og_tags')
+<meta property="og:url" content="https://best4ucareers.com/services">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Job Placement Services in Kerala | Best4U Careers">
+<meta property="og:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta property="og:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://best4ucareers.com/services">
+<meta name="twitter:title" content="Job Placement Services in Kerala | Best4U Careers">
+<meta name="twitter:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta name="twitter:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+@endsection
 
 @push('styles')
 <style>
@@ -74,7 +90,7 @@
     <!-- Start Breadcrumb -->
     <section class="breadcrumbs" style="background-image:url('{{ asset('public/frontend/assets/img/slider.webp') }}')">
       <div class="container text-center">
-        <h1 class="page-title text-white">OUR SERVICES</h1>
+        <h1 class="page-title text-white">Job Placement Services in Kerala</h1>
         <p class="text-white fs-5 opacity-90">Premium Recruitment & Workforce Solutions for India and Abroad</p>
       </div>
     </section>
@@ -97,7 +113,7 @@
           <a href="{{ url('/contact') }}" class="service-btn">Hire the Right Talent Today</a>
         </div>
         <div class="service-img">
-          <img src="{{ asset('public/frontend/assets/img/services/domestic_recruitement.jpg') }}" alt="Domestic Recruitment">
+          <img src="{{ asset('public/frontend/assets/img/services/domestic_recruitement.webp') }}" alt="Job Consultancy Services in India">
         </div>
       </div>
     </section>
@@ -106,7 +122,7 @@
     <section class="service-modern alt-bg">
       <div class="container service-flex">
         <div class="service-img">
-          <img src="{{ asset('public/frontend/assets/img/services/overseas_recruitement.jpg') }}" alt="Overseas Recruitment">
+          <img src="{{ asset('public/frontend/assets/img/services/overseas_recruitement.webp') }}" alt="HR Consultancy Services for Companies in India & UAE">
         </div>
         <div class="service-text">
           <h2>Overseas Recruitment & Placement</h2>

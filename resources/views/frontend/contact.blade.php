@@ -1,6 +1,22 @@
 @extends('layouts.frontend')
 
-@section('title', 'Contact Us')
+@section('title', 'Job Consultancy Contact in Kerala | Best4U Careers')
+@section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
+@section('canonical')
+<link rel="canonical" href="https://best4ucareers.com/contact" />
+@endsection
+@section('og_tags')
+<meta property="og:url" content="https://best4ucareers.com/contact">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Job Consultancy Contact in Kerala | Best4U Careers">
+<meta property="og:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta property="og:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://best4ucareers.com/contact">
+<meta name="twitter:title" content="Job Consultancy Contact in Kerala | Best4U Careers">
+<meta name="twitter:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta name="twitter:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+@endsection
 
 @push('styles')
 <style>
@@ -22,7 +38,7 @@
     background: rgba(26, 118, 209, 0.8);
     z-index: -1;
 }
-.breadcrumbs h2 { color: #fff; font-size: 30px; font-weight: 700; text-transform: capitalize; margin-bottom: 5px; }
+.breadcrumbs h1, .breadcrumbs h2 { color: #fff; font-size: 30px; font-weight: 700; text-transform: capitalize; margin-bottom: 5px; }
 .bread-list li { display: inline-block; color: #fff; }
 .bread-list li a { color: #fff; font-weight: 500; }
 .bread-list li i { margin: 0 10px; }
@@ -37,7 +53,7 @@
             <div class="bread-inner">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Contact Us</h2>
+                        <h1>Job Consultancy Contact in Kerala</h1>
                         <ul class="bread-list">
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li><i class="icofont-simple-right"></i></li>

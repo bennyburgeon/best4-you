@@ -5,9 +5,17 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    @hasSection('meta_description')<meta name="description" content="@yield('meta_description')">@endif
+    @yield('canonical')
+    @yield('og_tags')
 
     <!-- Title -->
-    <title>@yield('title', 'Job Portal') | Best4You</title>
+    @hasSection('title')
+<title>@yield('title')</title>
+    @else
+<title>Best Job Consultancy in Kerala | Best4U Careers</title>
+    @endif
+    @yield('schema')
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('public/frontend/assets/img/favicon.png') }}" />
@@ -81,7 +89,7 @@
                             <div class="col-lg-3 col-md-3 col-12">
                                 <!-- Start Logo -->
                                 <div class="logo">
-                                    <a href="{{ url('/') }}"><img src="{{ asset('public/frontend/assets/img/logo.jpg') }}" alt="Logo" /></a>
+                                    <a href="{{ url('/') }}"><img src="{{ asset('public/frontend/assets/img/logo.webp') }}" alt="Best4U Careers workforce planning experts Logo" /></a>
                                 </div>
                                 <!-- End Logo -->
                                 <!-- Mobile Nav -->
@@ -172,7 +180,7 @@
                             <div class="single-footer f-link">
                                 <h2>Job Seekers</h2>
                                 <ul>
-                                    <li><a href="#">Resume Building</a></li>
+                                    <li><a href="{{ url('/upload-resume') }}">Resume Building</a></li>
                                     <li><a href="#">Interview Prep</a></li>
                                     <li><a href="#">Networking</a></li>
                                 </ul>

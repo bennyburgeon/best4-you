@@ -1,6 +1,22 @@
 @extends('layouts.frontend')
 
-@section('title', 'About Us')
+@section('title', 'Job Consultancy in Kerala | Best4U Careers')
+@section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
+@section('canonical')
+<link rel="canonical" href="https://best4ucareers.com/about" />
+@endsection
+@section('og_tags')
+<meta property="og:url" content="https://best4ucareers.com/about">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Job Consultancy in Kerala | Best4U Careers">
+<meta property="og:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta property="og:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://best4ucareers.com/about">
+<meta name="twitter:title" content="Job Consultancy in Kerala | Best4U Careers">
+<meta name="twitter:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
+<meta name="twitter:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
+@endsection
 
 @push('styles')
 <style>
@@ -106,7 +122,7 @@
         <div class="container">
             <div class="row">
                 <div class="container text-center">
-                    <h1 class="page-title">ABOUT US</h1>
+                    <h1 class="page-title">Job Consultancy in Kerala</h1>
                 </div>
             </div>
         </div>
@@ -119,7 +135,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="about-img">
-                        <img src="{{ asset('public/frontend/assets/img/about-img.jpg') }}" alt="About">
+                        <img src="{{ asset('public/frontend/assets/img/about-img.webp') }}" alt="Best4U Careers workforce planning experts Office">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">

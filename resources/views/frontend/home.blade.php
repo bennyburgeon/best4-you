@@ -325,16 +325,10 @@
             <div class="row">
                 @if(isset($globalRegions))
                     @foreach($globalRegions as $reg)
-                        @php
-                            $color = '#6b7280';
-                            $icon = 'icofont-globe';
-                            if ($reg->slug === 'india') { $color = '#1a76d1'; $icon = 'icofont-location-pin'; }
-                            else if ($reg->slug === 'gulf') { $color = '#f59e0b'; $icon = 'icofont-location-pin'; }
-                            else if ($reg->slug === 'europe') { $color = '#10b981'; $icon = 'icofont-location-pin'; }
-                        @endphp
+                        
                         <div class="col-lg-3 col-md-6 col-12 mb-4">
                             <div class="card border-0 shadow-sm text-center h-100 p-4 regions-card">
-                                <div class="icon mb-3 regions-icon" style="color: {{ $color }};"><i class="{{ $icon }}"></i></div>
+                                <div class="icon mb-3 regions-icon" style="color: #6b7280;"><i class="icofont-globe"></i></div>
                                 <h4 class="fw-bold mb-2">Jobs in {{ $reg->name }}</h4>
                                 <p class="text-muted mb-3">Explore opportunities and build your career in {{ $reg->name }}.</p>
                                 <a href="{{ url('/jobs?region=' . $reg->slug) }}" class="btn btn-outline-primary btn-sm mt-auto regions-btn">Browse Jobs</a>

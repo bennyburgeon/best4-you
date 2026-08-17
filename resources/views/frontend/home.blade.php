@@ -323,19 +323,7 @@
                 </div>
             </div>
             <div class="row">
-                @if(isset($globalRegions))
-                    @foreach($globalRegions as $reg)
-                        
-                        <div class="col-lg-3 col-md-6 col-12 mb-4">
-                            <div class="card border-0 shadow-sm text-center h-100 p-4 regions-card">
-                                <div class="icon mb-3 regions-icon" style="color: #6b7280;"><i class="icofont-globe"></i></div>
-                                <h4 class="fw-bold mb-2">Jobs in {{ $reg->name }}</h4>
-                                <p class="text-muted mb-3">Explore opportunities and build your career in {{ $reg->name }}.</p>
-                                <a href="{{ url('/jobs?region=' . $reg->slug) }}" class="btn btn-outline-primary btn-sm mt-auto regions-btn">Browse Jobs</a>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
+                dsfsd
             </div>
         </div>
     </section>

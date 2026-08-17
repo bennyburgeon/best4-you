@@ -329,8 +329,8 @@
                             $color = '#6b7280';
                             $icon = 'icofont-globe';
                             if ($reg->slug === 'india') { $color = '#1a76d1'; $icon = 'icofont-location-pin'; }
-                            elseif ($reg->slug === 'gulf') { $color = '#f59e0b'; $icon = 'icofont-location-pin'; }
-                            elseif ($reg->slug === 'europe') { $color = '#10b981'; $icon = 'icofont-location-pin'; }
+                            else if ($reg->slug === 'gulf') { $color = '#f59e0b'; $icon = 'icofont-location-pin'; }
+                            else if ($reg->slug === 'europe') { $color = '#10b981'; $icon = 'icofont-location-pin'; }
                         @endphp
                         <div class="col-lg-3 col-md-6 col-12 mb-4">
                             <div class="card border-0 shadow-sm text-center h-100 p-4 regions-card">

@@ -428,23 +428,4 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        if ($.fn.owlCarousel) {
-            $('.hero-slider').owlCarousel({
-                loop: true,
-                autoplay: true,
-                smartSpeed: 500,
-                autoplayTimeout: 5000,
-                items: 1,
-                nav: true,
-                navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                dots: true,
-                animateOut: 'fadeOut',
-                autoplayHoverPause: true,
-            });
-        }
-    });
-</script>
-@endpush
+

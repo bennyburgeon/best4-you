@@ -325,17 +325,13 @@
             <div class="row">
                 @if(isset($globalRegions))
                     @foreach($globalRegions as $reg)
-                        
-                            @if ($reg->slug === 'india') 
-                                @php $color = '#1a76d1'; $icon = 'icofont-location-pin';  @endphp
-                            @elseif ($reg->slug === 'gulf') 
-                                @php $color = '#f59e0b'; $icon = 'icofont-location-pin';  @endphp
-                            @elseif ($reg->slug === 'europe')
-                                @php $color = '#10b981'; $icon = 'icofont-location-pin';  @endphp
-                            @else
-                                @php $color = '#6b7280';$icon = 'icofont-globe';
-                            @endif
-
+                        @php
+                            $color = '#6b7280';
+                            $icon = 'icofont-globe';
+                            if ($reg->slug === 'india') { $color = '#1a76d1'; $icon = 'icofont-location-pin'; }
+                            else if ($reg->slug === 'gulf') { $color = '#f59e0b'; $icon = 'icofont-location-pin'; }
+                            else if ($reg->slug === 'europe') { $color = '#10b981'; $icon = 'icofont-location-pin'; }
+                        @endphp
                         <div class="col-lg-3 col-md-6 col-12 mb-4">
                             <div class="card border-0 shadow-sm text-center h-100 p-4 regions-card">
                                 <div class="icon mb-3 regions-icon" style="color: {{ $color }};"><i class="{{ $icon }}"></i></div>

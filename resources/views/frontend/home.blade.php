@@ -5,7 +5,39 @@
 <link rel="canonical" href="https://best4ucareers.com/" />
 @endsection
 
-
+@section('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EmploymentAgency",
+  "name": "Best4U Careers",
+  "url": "https://best4ucareers.com/",
+  "telephone": "+91 7594008787",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1587/H, Elayambari House (Ambadi Building), Florican Road, Malaparamba, Kozhikode, Kerala",
+    "addressLocality": "Kozhikode",
+    "postalCode": "673009",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 11.2923445,
+    "longitude": 75.79813860000002
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "06:00"
+  },
+  "sameAs": [
+    "https://www.facebook.com/bestforyouhrconsultancyIndia/",
+    "https://www.instagram.com/bestforyouhrconsultancy_India/"
+  ]
+}
+</script>
+@endsection
 
 @push('styles')
 <style>

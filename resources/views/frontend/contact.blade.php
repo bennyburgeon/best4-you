@@ -1,6 +1,7 @@
 @extends('layouts.frontend')
 
 @section('title', 'Job Consultancy Contact in Kerala | Best4U Careers')
+@section('meta_title', 'job consultancy contact in kerala')
 @section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
 @section('canonical')
 <link rel="canonical" href="https://best4ucareers.com/contact" />

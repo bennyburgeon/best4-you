@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    @hasSection('meta_title')<meta name="title" content="@yield('meta_title')">@endif
     @hasSection('meta_description')<meta name="description" content="@yield('meta_description')">@endif
     @yield('canonical')
     @yield('og_tags')

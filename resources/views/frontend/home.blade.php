@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
-@section('title', 'Best Job Consultancy in India | Best4U Careers')
-@section('meta_title', 'Best job consultancy in india')
+@section('title', 'Best Job Consultancy in Kerala | Best4U Careers')
+@section('meta_title', 'Best job consultancy in Kerala')
 @section('meta_description', 'Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.')
 @section('canonical')
 <link rel="canonical" href="https://best4ucareers.com/" />
@@ -8,12 +8,12 @@
 @section('og_tags')
 <meta property="og:url" content="https://best4ucareers.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Best Job Consultancy in India | Best4U Careers">
+<meta property="og:title" content="Best Job Consultancy in Kerala | Best4U Careers">
 <meta property="og:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
 <meta property="og:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://best4ucareers.com/">
-<meta name="twitter:title" content="Best Job Consultancy in India | Best4U Careers">
+<meta name="twitter:title" content="Best Job Consultancy in Kerala | Best4U Careers">
 <meta name="twitter:description" content="Find the best job consultancy in Kerala for freshers and experienced professionals. Explore the latest job opportunities and get reliable career guidance and placement support.">
 <meta name="twitter:image" content="{{ asset('public/frontend/assets/img/logo.jpg') }}">
 @endsection
@@ -188,7 +188,7 @@
                         <div class="col-lg-7">
                             <div class="text">
                                 <h2>
-                                    Best <span>Job Consultancy </span> in India<br>
+                                    Best <span>Job Consultancy </span> in Kerala<br>
                                     <span>Find Your Dream Job</span> with Confidence
                                 </h2>
                                 <p>
